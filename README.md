@@ -1,2 +1,2 @@
-# Idle-Module-GGJ23
- Idle game developed for Global Game Jam 2023 by Scott King
+# Idle-Module
+ Idle game developed by Scott King
