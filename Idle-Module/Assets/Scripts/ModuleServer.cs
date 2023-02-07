@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 // Based on CustomServer.cs
 public class ModuleServer : Server
@@ -11,6 +13,9 @@ public class ModuleServer : Server
 
     private bool serverConnected = false;
     private bool clientConnected = false;
+
+    [SerializeField] private TextMeshProUGUI _text;
+    private int counter = 0;
 
     protected virtual void Awake()
     {
@@ -45,5 +50,29 @@ public class ModuleServer : Server
             return;
         }
         base.SendMessageToClient(newMsg);
+    }
+
+    protected override void OnMessageReceived(string receivedMessage)
+    {
+        ServerLog($"Msg recived on Server: <b>{receivedMessage}</b>", Color.green);
+        switch (receivedMessage)
+        {
+            case "Close":
+                //Close client connection
+                CloseClientConnection();
+                break;
+            case "unit":
+                IncrementCounter();
+                break;
+            default:
+                ServerLog($"Received message <b>{receivedMessage}</b>, has no special behaviuor", Color.red);
+                break;
+        }
+    }
+
+    private void IncrementCounter()
+    {
+        counter++;
+        _text.text = counter.ToString();
     }
 }

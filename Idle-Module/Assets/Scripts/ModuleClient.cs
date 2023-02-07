@@ -31,7 +31,7 @@ public class ModuleClient : Client
 
     private void SendMessageToServer()
     {
-        string newMsg = "I'm a client!";
+        string newMsg = "unit";
         if (string.IsNullOrEmpty(newMsg))
         {
             Debug.Log("Client: tried to send empty message");
