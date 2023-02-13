@@ -1,5 +1,5 @@
-# Idle-Module-GGJ23
- Idle game developed for Global Game Jam 2023 by Scott King
+# Desktop Eden
+Developed by Scott King, Kelly Zheng, and Stacey Cho for 60-418 at CMU
 
 ## Attributions
 "SimpleUnityTCP" Networking Code by Eric Batlle <br>
