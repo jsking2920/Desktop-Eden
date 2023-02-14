@@ -11,8 +11,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            Creature c = Instantiate(_creaturePrefab).GetComponent<Creature>();
-            c.InitializeRandom();
+            SpawnCreature();
         }
     }
 
@@ -20,13 +19,13 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Creature c = Instantiate(_creaturePrefab).GetComponent<Creature>();
-            c.InitializeRandom();
+            SpawnCreature();
         }
     }
 
     private void SpawnCreature()
     {
-
+        Creature c = Instantiate(_creaturePrefab).GetComponent<Creature>();
+        c.InitializeRandom();
     }
 }

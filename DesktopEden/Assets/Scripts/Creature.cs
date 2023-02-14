@@ -17,6 +17,7 @@ public class Creature : MonoBehaviour
     [SerializeField] private List<GameObject> _hats = new List<GameObject>();
     [SerializeField] private List<GameObject> _mouths = new List<GameObject>();
     [SerializeField] private List<GameObject> _eyes = new List<GameObject>();
+    [SerializeField] private List<GameObject> _blinkingEyes = new List<GameObject>();
     [SerializeField] private List<GameObject> _heads = new List<GameObject>();
     [SerializeField] private List<GameObject> _legs = new List<GameObject>();
     [SerializeField] private List<GameObject> _bodies = new List<GameObject>();
@@ -37,16 +38,22 @@ public class Creature : MonoBehaviour
     public float directionDecisionTime = 2.0f; // Little bit gets added to randomize this minimum
     public float chanceToStandStill = 0.25f;
 
+    // Blinking
+    private float _blinkDelay = 4.0f;
+    private float _blinkTimer = 4.0f;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _transform = GetComponent<Transform>();
 
         _decisionTimer = directionDecisionTime;
+        _blinkTimer = _blinkDelay;
     }
 
     private void Update()
     {   
+        // Move in current direction
         _transform.position += _currentDirection * Time.deltaTime * speed;
 
         // Bounce off of sides
@@ -60,6 +67,7 @@ public class Creature : MonoBehaviour
             _currentDirection.Scale(new Vector3(1.0f, -1.0f, 1.0f));
         }
 
+        // Decide on new direction
         _decisionTimer -= Time.deltaTime;
         if (_decisionTimer <= 0.0f)
         {
@@ -73,6 +81,14 @@ public class Creature : MonoBehaviour
             }
             _decisionTimer = directionDecisionTime;
             _decisionTimer += Random.Range(0.0f, directionDecisionTime / 2.0f);
+        }
+
+        // Blinking
+        _blinkTimer -= Time.deltaTime;
+        if (_blinkTimer <= 0.0f)
+        {
+            _blinkTimer = Random.Range(_blinkDelay - 1.5f, _blinkDelay + 2.0f);
+            StartCoroutine(BlinkCo(eyesIndex));
         }
     }
 
@@ -134,5 +150,16 @@ public class Creature : MonoBehaviour
             part.SetActive(false);
         }
         parts[index].SetActive(true);
+    }
+
+    private IEnumerator BlinkCo(int i)
+    {
+        _eyes[i].SetActive(false);
+        _blinkingEyes[i].SetActive(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        _eyes[i].SetActive(true);
+        _blinkingEyes[i].SetActive(false);
     }
 }
