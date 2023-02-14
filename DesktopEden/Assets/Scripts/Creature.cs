@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
+    private static float Z_OFFSET = 0.0f;
+    
     private Animator _animator;
     private Transform _transform;
 
@@ -34,7 +36,7 @@ public class Creature : MonoBehaviour
     public float directionDecisionTime = 2.0f; // Little bit gets added to randomize this minimum
     public float chanceToStandStill = 0.25f;
 
-    private void Start()
+    private void Awake()
     {
         _animator = GetComponent<Animator>();
         _transform = GetComponent<Transform>();
@@ -73,29 +75,39 @@ public class Creature : MonoBehaviour
         }
     }
 
-    public void SetSprites(int hatIndex, int mouthIndex, int eyesIndex, int headIndex, int legsIndex, int bodyIndex)
+    public void InitializeRandom()
     {
-        //SetBodyPart(_hats, hatIndex);
-        SetBodyPart(_mouths, mouthIndex);
-        SetBodyPart(_eyes, eyesIndex);
-        SetBodyPart(_heads, headIndex);
-        SetBodyPart(_legs, legsIndex);
-        SetBodyPart(_bodies, bodyIndex);
+        // Randomize position within screen
+        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0.0f, Camera.main.pixelWidth), Random.Range(0.0f, Camera.main.pixelHeight), Z_OFFSET - Camera.main.transform.position.z));
+        Z_OFFSET += 0.001f;
+
+        // Randomize traits
+        scale = Random.Range(scale - 0.2f, scale + 0.2f);
+        _transform.localScale = new Vector3(scale, scale, scale);
+
+        speed = Random.Range(speed - 1.0f, speed + 1.0f);
+        directionDecisionTime = Random.Range(directionDecisionTime - 0.75f, directionDecisionTime + 0.75f);
+        chanceToStandStill = Random.Range(chanceToStandStill - 0.1f, chanceToStandStill + 0.1f);
+
+        SetSprites(Random.Range(0, _hats.Count), Random.Range(0, _mouths.Count),
+                   Random.Range(0, _eyes.Count), Random.Range(0, _heads.Count),
+                   Random.Range(0, _legs.Count), Random.Range(0, _bodies.Count));
     }
 
-    public void SetRandomSprites()
+    public void SetSprites(int _hatIndex, int _mouthIndex, int _eyesIndex, int _headIndex, int _legsIndex, int _bodyIndex)
     {
-        //SetBodyPartRandom(_hats);
-        SetBodyPartRandom(_mouths);
-        SetBodyPartRandom(_eyes);
-        SetBodyPartRandom(_heads);
-        SetBodyPartRandom(_legs);
-        SetBodyPartRandom(_bodies);
-    }
-
-    private void SetBodyPartRandom(List<GameObject> parts)
-    {
-        SetBodyPart(parts, Random.Range(0, parts.Count));
+        // SetBodyPart(_hats, hatIndex);
+        // hatIndex = _hatIndex
+        SetBodyPart(_mouths, _mouthIndex);
+        mouthIndex = _mouthIndex;
+        SetBodyPart(_eyes, _eyesIndex);
+        eyesIndex = _eyesIndex;
+        SetBodyPart(_heads, _headIndex);
+        headIndex = _headIndex;
+        SetBodyPart(_legs, _legsIndex);
+        legsIndex = _legsIndex;
+        SetBodyPart(_bodies, _bodyIndex);
+        bodyIndex = _bodyIndex;
     }
 
     private void SetBodyPart(List<GameObject> parts, int index)
