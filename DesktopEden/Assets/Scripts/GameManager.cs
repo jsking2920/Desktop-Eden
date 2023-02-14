@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject _creaturePrefab;
+    [SerializeField] private GameObject _eggPrefab;
 
     void Start()
     {
@@ -22,5 +23,10 @@ public class GameManager : MonoBehaviour
             Creature c = Instantiate(_creaturePrefab).GetComponent<Creature>();
             c.InitializeRandom();
         }
+    }
+
+    private void SpawnCreature()
+    {
+
     }
 }

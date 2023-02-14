@@ -8,6 +8,7 @@ public class Creature : MonoBehaviour
     
     private Animator _animator;
     private Transform _transform;
+    [SerializeField] private GameObject _spritesParent;
 
     private Vector3 _currentDirection = Vector2.zero;
     private float _decisionTimer = 0.0f;
@@ -79,7 +80,7 @@ public class Creature : MonoBehaviour
     {
         // Randomize position within screen
         transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0.0f, Camera.main.pixelWidth), Random.Range(0.0f, Camera.main.pixelHeight), Z_OFFSET - Camera.main.transform.position.z));
-        Z_OFFSET += 0.001f;
+        Z_OFFSET -= 0.001f;
 
         // Randomize traits
         scale = Random.Range(scale - 0.2f, scale + 0.2f);
@@ -108,6 +109,16 @@ public class Creature : MonoBehaviour
         legsIndex = _legsIndex;
         SetBodyPart(_bodies, _bodyIndex);
         bodyIndex = _bodyIndex;
+    }
+
+    public void HideCreature()
+    {
+        _spritesParent.SetActive(false);
+    }
+
+    public void UnhideCreature()
+    {
+        _spritesParent.SetActive(true);
     }
 
     private void SetBodyPart(List<GameObject> parts, int index)
