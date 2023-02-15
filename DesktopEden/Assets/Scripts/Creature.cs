@@ -157,7 +157,7 @@ public class Creature : MonoBehaviour
         _eyes[i].SetActive(false);
         _blinkingEyes[i].SetActive(true);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.15f);
 
         _eyes[i].SetActive(true);
         _blinkingEyes[i].SetActive(false);
