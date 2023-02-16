@@ -432,6 +432,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5401640799970147978, guid: ad97e9355ef3dc644ac57c8e01ac7259, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5401640799970147978, guid: ad97e9355ef3dc644ac57c8e01ac7259, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5401640799970147978, guid: ad97e9355ef3dc644ac57c8e01ac7259, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5401640799970147978, guid: ad97e9355ef3dc644ac57c8e01ac7259, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7025057375834748112, guid: ad97e9355ef3dc644ac57c8e01ac7259, type: 3}
       propertyPath: m_Name
       value: HeartParticles
