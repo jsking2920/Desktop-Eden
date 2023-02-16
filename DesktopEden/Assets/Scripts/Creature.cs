@@ -101,6 +101,8 @@ public class Creature : MonoBehaviour
         else
         {
             // do a little wiggle
+            float rZ = Mathf.SmoothStep(-12.0f, 12.0f, Mathf.PingPong(Time.time * 1.75f, 1));
+            transform.rotation = Quaternion.Euler(0.0f, 0.0f, rZ);
         }
 
         // Blinking
@@ -151,12 +153,17 @@ public class Creature : MonoBehaviour
     {
         _beingHeld = true;
         _blinkDelay *= 0.25f;
+        if (_blinkTimer > 1.0f)
+        {
+            _blinkTimer = 1.0f;
+        }
     }
 
     public void PutDown()
     {
         _beingHeld = false;
         _blinkDelay *= 4.0f;
+        _transform.rotation = Quaternion.identity;
     }
 
     public void InitializeRandom()
