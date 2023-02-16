@@ -13,6 +13,7 @@ public class Creature : MonoBehaviour
 
     private Vector3 _currentDirection = Vector2.zero;
     private float _decisionTimer = 0.0f;
+    private bool _beingHeld = false;
 
     private float _timeBetweenBreeding = 60.0f;
     private float _breedingTimer = 60.0f;
@@ -57,6 +58,7 @@ public class Creature : MonoBehaviour
 
         _decisionTimer = directionDecisionTime;
         _blinkTimer = _blinkDelay;
+        _blinkTimer += Random.Range(0.0f, _blinkDelay);
 
         _breedingTimer = _timeBetweenBreeding;
         _breeding = false;
@@ -64,34 +66,37 @@ public class Creature : MonoBehaviour
 
     private void Update()
     {   
-        // Move in current direction
-        _transform.position += _currentDirection * Time.deltaTime * speed;
+        if (!_beingHeld)
+        {
+            // Move in current direction
+            _transform.position += _currentDirection * Time.deltaTime * speed;
 
-        // Bounce off of sides
-        Vector2 screenPos = Camera.main.WorldToScreenPoint(_transform.position);
-        if (screenPos.x < 0 || screenPos.x > Camera.main.pixelWidth)
-        {
-            _currentDirection.Scale(new Vector3(-1.0f, 1.0f, 1.0f));
-        }
-        else if (screenPos.y < 0 || screenPos.y > Camera.main.pixelHeight)
-        {
-            _currentDirection.Scale(new Vector3(1.0f, -1.0f, 1.0f));
-        }
+            // Bounce off of sides
+            Vector2 screenPos = Camera.main.WorldToScreenPoint(_transform.position);
+            if (screenPos.x < 0 || screenPos.x > Camera.main.pixelWidth)
+            {
+                _currentDirection.Scale(new Vector3(-1.0f, 1.0f, 1.0f));
+            }
+            else if (screenPos.y < 0 || screenPos.y > Camera.main.pixelHeight)
+            {
+                _currentDirection.Scale(new Vector3(1.0f, -1.0f, 1.0f));
+            }
 
-        // Decide on new direction
-        _decisionTimer -= Time.deltaTime;
-        if (_decisionTimer <= 0.0f)
-        {
-            if (Random.Range(0.0f, 1.0f) <= chanceToStandStill)
+            // Decide on new direction
+            _decisionTimer -= Time.deltaTime;
+            if (_decisionTimer <= 0.0f)
             {
-                _currentDirection = Vector2.zero;
+                if (Random.Range(0.0f, 1.0f) <= chanceToStandStill)
+                {
+                    _currentDirection = Vector2.zero;
+                }
+                else
+                {
+                    _currentDirection = Random.insideUnitCircle;
+                }
+                _decisionTimer = directionDecisionTime;
+                _decisionTimer += Random.Range(0.0f, directionDecisionTime / 2.0f);
             }
-            else
-            {
-                _currentDirection = Random.insideUnitCircle;
-            }
-            _decisionTimer = directionDecisionTime;
-            _decisionTimer += Random.Range(0.0f, directionDecisionTime / 2.0f);
         }
 
         // Blinking
@@ -110,23 +115,25 @@ public class Creature : MonoBehaviour
     }
 
     // Called by OnTriggerEnter in CeatureBreedingCollider.cs when two creatures colliders overlap
-    public void BreedingTrigger(Creature otherCreature)
+    public bool BreedingTrigger(Creature otherCreature)
     {
-        if (_breeding || _breedingTimer > 0.0f)
+        if (_beingHeld || _breeding || _breedingTimer > 0.0f)
         {
-            return;
+            return false;
         }
-
-        if (Random.Range(0.0f, 1.0f) <= chanceToLayEgg)
+        else if (Random.Range(0.0f, 1.0f) <= chanceToLayEgg)
         {
             _breeding = true;
             _breedingTimer = _timeBetweenBreeding;
             HaveChild(otherCreature);
+            return true;
         }
+        return false;
     }
 
     public Creature HaveChild(Creature otherParent)
     {
+        // TODO: add in coroutine pause here
         Creature child = Instantiate(_creaturePrefab).GetComponent<Creature>();
         child.InitializeRandom();
         child.transform.position = _transform.position - new Vector3(0.0f, -1.0f, 0.0f);
@@ -136,13 +143,23 @@ public class Creature : MonoBehaviour
         return child;
     }
 
+    public void PickUp()
+    {
+        _beingHeld = true;
+    }
+
+    public void PutDown()
+    {
+        _beingHeld = false;
+    }
+
     public void InitializeRandom()
     {
         // Randomize position within screen
         transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0.0f, Camera.main.pixelWidth), Random.Range(0.0f, Camera.main.pixelHeight), -Camera.main.transform.position.z));
 
         // Randomize traits
-        scale = Random.Range(scale - 0.2f, scale + 0.2f);
+        scale = Random.Range(scale - 0.15f, scale + 0.15f);
         _transform.localScale = new Vector3(scale, scale, scale);
 
         speed = Random.Range(speed - 1.0f, speed + 1.0f);

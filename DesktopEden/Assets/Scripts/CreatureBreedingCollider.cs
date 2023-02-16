@@ -5,9 +5,14 @@ using UnityEngine;
 public class CreatureBreedingCollider : MonoBehaviour
 {
     public Creature creature;
+    public ParticleSystem ps;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        creature.BreedingTrigger(collision.gameObject.GetComponent<Creature>());
+        if (creature.BreedingTrigger(collision.gameObject.GetComponent<Creature>()))
+        {
+            ps.transform.position = collision.contacts[0].point;
+            ps.Play();
+        }
     }
 }
