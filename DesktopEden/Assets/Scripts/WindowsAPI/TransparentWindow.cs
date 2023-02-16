@@ -70,7 +70,10 @@ public class TransparentWindow : MonoBehaviour
 
     private void Update()
     {
-        SetClickthrough(Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)) == null);
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+        SetClickthrough(hit.rigidbody == null);
     }
 
     private void SetClickthrough(bool clickthrough)
