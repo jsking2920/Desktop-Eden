@@ -28,12 +28,13 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Hit");
                 _heldCreatureTransform = hit.transform;
-                _heldCreature.GetComponent<Creature>().PickUp();
+                _heldCreature = _heldCreatureTransform.GetComponent<Creature>();
+                _heldCreature.PickUp();
             }
         }
         else if (_heldCreature != null && Input.GetMouseButton(0))
-        {
-            _heldCreatureTransform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _heldCreatureTransform.position.z));
+        { 
+            _heldCreatureTransform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
         }
         else if (_heldCreature != null)
         {

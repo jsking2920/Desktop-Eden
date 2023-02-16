@@ -98,6 +98,10 @@ public class Creature : MonoBehaviour
                 _decisionTimer += Random.Range(0.0f, directionDecisionTime / 2.0f);
             }
         }
+        else
+        {
+            // do a little wiggle
+        }
 
         // Blinking
         _blinkTimer -= Time.deltaTime;
@@ -146,11 +150,13 @@ public class Creature : MonoBehaviour
     public void PickUp()
     {
         _beingHeld = true;
+        _blinkDelay *= 0.25f;
     }
 
     public void PutDown()
     {
         _beingHeld = false;
+        _blinkDelay *= 4.0f;
     }
 
     public void InitializeRandom()
