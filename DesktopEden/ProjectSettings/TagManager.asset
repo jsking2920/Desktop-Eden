@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Creature
+  - CreatureClickable
+  - CreatureBreeding
   layers:
   - Default
   - TransparentFX
@@ -12,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - CreatureBreeding
   - 
   - 
   - 
@@ -42,6 +44,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: New Layer 1
-    uniqueID: 2813850665
+  - name: Hearts
+    uniqueID: 3996953877
     locked: 0

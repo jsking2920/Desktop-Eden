@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
-    private static float Z_OFFSET = 0.0f;
-    
+    [SerializeField] private GameObject _creaturePrefab;
+
     private Animator _animator;
     private Transform _transform;
     [SerializeField] private GameObject _spritesParent;
@@ -23,6 +23,9 @@ public class Creature : MonoBehaviour
     [SerializeField] private List<GameObject> _bodies = new List<GameObject>();
 
     [Header("Traits")]
+    public string creatureName = "CREATURE_NAME";
+    public float chanceToLayEgg = 0.5f;
+    
     // Sprites; Indexes are relative to the list of associated game objects; -1 means that body part is missing
     public int hatIndex = -1;
     public int mouthIndex = -1;
@@ -92,11 +95,28 @@ public class Creature : MonoBehaviour
         }
     }
 
+    // Called by OnTriggerEnter in CeatureBreedingCollider.cs when two creatures colliders overlap
+    public void BreedingTrigger(Creature otherCreature)
+    {
+        if (Random.Range(0.0f, 1.0f) <= chanceToLayEgg)
+        {
+            HaveChild(otherCreature);
+            Debug.Log("It's a...???");
+        }
+    }
+
+    public Creature HaveChild(Creature otherParent)
+    {
+        Creature child = Instantiate(_creaturePrefab).GetComponent<Creature>();
+        child.InitializeRandom();
+        child.transform.position = _transform.position - new Vector3(0.0f, -1.0f, 0.0f);
+        return child;
+    }
+
     public void InitializeRandom()
     {
         // Randomize position within screen
-        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0.0f, Camera.main.pixelWidth), Random.Range(0.0f, Camera.main.pixelHeight), Z_OFFSET - Camera.main.transform.position.z));
-        Z_OFFSET -= 0.001f;
+        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0.0f, Camera.main.pixelWidth), Random.Range(0.0f, Camera.main.pixelHeight), -Camera.main.transform.position.z));
 
         // Randomize traits
         scale = Random.Range(scale - 0.2f, scale + 0.2f);
@@ -109,6 +129,8 @@ public class Creature : MonoBehaviour
         SetSprites(Random.Range(0, _hats.Count), Random.Range(0, _mouths.Count),
                    Random.Range(0, _eyes.Count), Random.Range(0, _heads.Count),
                    Random.Range(0, _legs.Count), Random.Range(0, _bodies.Count));
+
+        creatureName = "Get Randomized Name pls";
     }
 
     public void SetSprites(int _hatIndex, int _mouthIndex, int _eyesIndex, int _headIndex, int _legsIndex, int _bodyIndex)
