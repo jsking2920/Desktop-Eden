@@ -121,7 +121,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6855827798353556808}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6855827800045963161}
+        m_TargetAssemblyTypeName: PopUpWindow, Assembly-CSharp
+        m_MethodName: OnXButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6855827798728757979
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,7 +601,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6855827799541139247}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6855827800045963161}
+        m_TargetAssemblyTypeName: PopUpWindow, Assembly-CSharp
+        m_MethodName: OnLeftButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6855827799769349066
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,7 +735,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6855827799769349069}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6855827800045963161}
+        m_TargetAssemblyTypeName: PopUpWindow, Assembly-CSharp
+        m_MethodName: OnRightButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6855827799861105281
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,10 +976,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c8257995c41f54185aaf7c4b7d7ada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rectTransform: {fileID: 0}
-  xButton: {fileID: 0}
-  leftButton: {fileID: 0}
-  leftButtonText: {fileID: 0}
-  rightButton: {fileID: 0}
-  rightButtonText: {fileID: 0}
-  messageText: {fileID: 0}
+  rectTransform: {fileID: 6855827800045963142}
+  xButton: {fileID: 6855827798353556791}
+  leftButton: {fileID: 6855827799541139246}
+  leftButtonText: {fileID: 6855827799861105283}
+  rightButton: {fileID: 6855827799769349068}
+  rightButtonText: {fileID: 6855827799176199527}
+  messageText: {fileID: 6855827798728757981}

@@ -200,6 +200,7 @@ public class Creature : MonoBehaviour
 
     private IEnumerator BlinkCo(int i)
     {
+
         _eyes[i].SetActive(false);
         _blinkingEyes[i].SetActive(true);
 

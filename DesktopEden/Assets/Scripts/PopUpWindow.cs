@@ -22,16 +22,31 @@ public class PopUpWindow : MonoBehaviour
     private UnityEvent onRightButton = new UnityEvent();
     private UnityEvent onLeftButton = new UnityEvent();
 
-    public void Initialize(UnityAction xAction, UnityAction leftAction, UnityAction rightAction, Vector3 worldSpacePos, string _messageText, string _leftButtonText, string _rightButtonText)
+    public void Initialize(UnityAction xAction, UnityAction leftAction, UnityAction rightAction, Vector3 worldSpacePos, string _messageText, string _leftButtonText, string _rightButtonText, bool hideLeftButton, bool hideRightButton)
     {
+        if (hideLeftButton)
+        {
+            leftButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            onLeftButton.AddListener(leftAction);
+        }
+        if (hideRightButton)
+        {
+            rightButton.gameObject.SetActive(false);
+            leftButtonText.text = _leftButtonText;
+        }
+        else
+        {
+            onRightButton.AddListener(rightAction);
+            rightButtonText.text = _rightButtonText;
+        }
+
         onXButton.AddListener(xAction);
-        onLeftButton.AddListener(leftAction);
-        onRightButton.AddListener(rightAction);
 
         messageText.text = _messageText;
-        leftButtonText.text = _leftButtonText;
-        rightButtonText.text = _rightButtonText;
-
+  
         rectTransform.position = Camera.main.WorldToScreenPoint(worldSpacePos);
     }
 
