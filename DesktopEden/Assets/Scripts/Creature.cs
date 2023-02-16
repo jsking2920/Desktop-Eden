@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Creature : MonoBehaviour
@@ -12,6 +13,10 @@ public class Creature : MonoBehaviour
 
     private Vector3 _currentDirection = Vector2.zero;
     private float _decisionTimer = 0.0f;
+
+    private float _timeBetweenBreeding = 60.0f;
+    private float _breedingTimer = 60.0f;
+    private bool _breeding = false;
     
     [Header("Body Part Objects")]
     [SerializeField] private List<GameObject> _hats = new List<GameObject>();
@@ -52,6 +57,9 @@ public class Creature : MonoBehaviour
 
         _decisionTimer = directionDecisionTime;
         _blinkTimer = _blinkDelay;
+
+        _breedingTimer = _timeBetweenBreeding;
+        _breeding = false;
     }
 
     private void Update()
@@ -93,13 +101,26 @@ public class Creature : MonoBehaviour
             _blinkTimer = Random.Range(_blinkDelay - 1.5f, _blinkDelay + 2.0f);
             StartCoroutine(BlinkCo(eyesIndex));
         }
+
+        // Breeding
+        if (!_breeding && _breedingTimer >= 0.0f)
+        {
+            _breedingTimer -= Time.deltaTime;
+        }
     }
 
     // Called by OnTriggerEnter in CeatureBreedingCollider.cs when two creatures colliders overlap
     public void BreedingTrigger(Creature otherCreature)
     {
+        if (_breeding || _breedingTimer > 0.0f)
+        {
+            return;
+        }
+
         if (Random.Range(0.0f, 1.0f) <= chanceToLayEgg)
         {
+            _breeding = true;
+            _breedingTimer = _timeBetweenBreeding;
             HaveChild(otherCreature);
             Debug.Log("It's a...???");
         }
@@ -110,6 +131,9 @@ public class Creature : MonoBehaviour
         Creature child = Instantiate(_creaturePrefab).GetComponent<Creature>();
         child.InitializeRandom();
         child.transform.position = _transform.position - new Vector3(0.0f, -1.0f, 0.0f);
+
+        _breeding = false;
+
         return child;
     }
 

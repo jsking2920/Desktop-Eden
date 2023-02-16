@@ -1884,6 +1884,7 @@ GameObject:
   - component: {fileID: 8096997481553554571}
   - component: {fileID: 954799204186369943}
   - component: {fileID: 7504394517049967499}
+  - component: {fileID: 1364017289122977168}
   - component: {fileID: 2665740677585161227}
   m_Layer: 0
   m_Name: Creature
@@ -2019,6 +2020,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.95, y: 3.21}
   m_EdgeRadius: 0
+--- !u!50 &1364017289122977168
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3187784526083506171}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!95 &2665740677585161227
 Animator:
   serializedVersion: 5
@@ -2387,7 +2409,6 @@ GameObject:
   - component: {fileID: 81788903271528396}
   - component: {fileID: 128458570640133741}
   - component: {fileID: 8706314263202626396}
-  - component: {fileID: 1280491407985424674}
   m_Layer: 6
   m_Name: BreedingColliders
   m_TagString: CreatureBreeding
@@ -2475,27 +2496,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0802464, y: 0.07143295}
   m_EdgeRadius: 0
---- !u!50 &1280491407985424674
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4222204206447521194}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &4372832670617410831
 GameObject:
   m_ObjectHideFlags: 0

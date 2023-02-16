@@ -8,6 +8,6 @@ public class CreatureBreedingCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        creature.BreedingTrigger(collision.transform.parent.GetComponent<Creature>());
+        creature.BreedingTrigger(collision.gameObject.GetComponent<Creature>());
     }
 }
