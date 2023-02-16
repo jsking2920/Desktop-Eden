@@ -99,7 +99,7 @@ public class Creature : MonoBehaviour
         if (_blinkTimer <= 0.0f)
         {
             _blinkTimer = Random.Range(_blinkDelay - 1.5f, _blinkDelay + 2.0f);
-            StartCoroutine(BlinkCo(eyesIndex));
+            StartCoroutine(BlinkCo());
         }
 
         // Breeding
@@ -122,7 +122,6 @@ public class Creature : MonoBehaviour
             _breeding = true;
             _breedingTimer = _timeBetweenBreeding;
             HaveChild(otherCreature);
-            Debug.Log("It's a...???");
         }
     }
 
@@ -164,6 +163,7 @@ public class Creature : MonoBehaviour
         SetBodyPart(_mouths, _mouthIndex);
         mouthIndex = _mouthIndex;
         SetBodyPart(_eyes, _eyesIndex);
+        SetBodyPart(_blinkingEyes, _eyesIndex);
         eyesIndex = _eyesIndex;
         SetBodyPart(_heads, _headIndex);
         headIndex = _headIndex;
@@ -198,15 +198,24 @@ public class Creature : MonoBehaviour
         parts[index].SetActive(true);
     }
 
-    private IEnumerator BlinkCo(int i)
+    private IEnumerator BlinkCo()
     {
+        int cachedEyeIndex = eyesIndex;
 
-        _eyes[i].SetActive(false);
-        _blinkingEyes[i].SetActive(true);
+        _eyes[eyesIndex].SetActive(false);
+        _blinkingEyes[eyesIndex].SetActive(true);
 
         yield return new WaitForSeconds(0.15f);
 
-        _eyes[i].SetActive(true);
-        _blinkingEyes[i].SetActive(false);
+        if (cachedEyeIndex != eyesIndex)
+        {
+            _eyes[eyesIndex].SetActive(true);
+            _blinkingEyes[cachedEyeIndex].SetActive(false);
+        }
+        else
+        {
+            _eyes[eyesIndex].SetActive(true);
+            _blinkingEyes[eyesIndex].SetActive(false);
+        }
     }
 }
