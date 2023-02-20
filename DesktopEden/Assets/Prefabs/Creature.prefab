@@ -1926,6 +1926,7 @@ MonoBehaviour:
   _creaturePrefab: {fileID: 3187784526083506171}
   _spritesParent: {fileID: 7344202409250865763}
   beingHeld: 0
+  grabbable: 1
   _hats: []
   _mouths:
   - {fileID: 6895446709906843312}
@@ -2408,6 +2409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6130974878820553698}
   - component: {fileID: 81788903271528396}
+  - component: {fileID: 7967980956270633971}
   - component: {fileID: 128458570640133741}
   - component: {fileID: 8706314263202626396}
   m_Layer: 6
@@ -2447,6 +2449,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   creature: {fileID: 954799204186369943}
   ps: {fileID: 1221258772664721731}
+--- !u!50 &7967980956270633971
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4222204206447521194}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &128458570640133741
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2457,7 +2480,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 1.55, y: -0.18915248}
@@ -2483,7 +2506,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -1.5545146, y: -0.18915248}

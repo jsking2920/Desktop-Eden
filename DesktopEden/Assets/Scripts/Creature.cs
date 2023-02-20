@@ -17,8 +17,8 @@ public class Creature : MonoBehaviour
     public bool beingHeld = false;
     public bool grabbable = true;
 
-    private float _timeBetweenBreeding = 60.0f;
-    private float _breedingTimer = 60.0f;
+    private float _timeBetweenBreeding = 30.0f;
+    private float _breedingTimer = 30.0f;
     private bool _breeding = false;
     
     [Header("Body Part Objects")]
@@ -62,7 +62,7 @@ public class Creature : MonoBehaviour
         _blinkTimer = _blinkDelay;
         _blinkTimer += Random.Range(0.0f, _blinkDelay);
 
-        _breedingTimer = _timeBetweenBreeding;
+        _breedingTimer = Random.Range(0.0f, _timeBetweenBreeding);
         _breeding = false;
     }
 
@@ -75,11 +75,11 @@ public class Creature : MonoBehaviour
 
             // Bounce off of sides
             Vector2 screenPos = Camera.main.WorldToScreenPoint(_transform.position);
-            if (screenPos.x < 0 || screenPos.x > Camera.main.pixelWidth)
+            if (screenPos.x < Camera.main.pixelWidth * 0.1f || screenPos.x > Camera.main.pixelWidth * 0.9f)
             {
                 _currentDirection.Scale(new Vector3(-1.0f, 1.0f, 1.0f));
             }
-            else if (screenPos.y < 0 || screenPos.y > Camera.main.pixelHeight)
+            else if (screenPos.y < Camera.main.pixelHeight * 0.1f || screenPos.y > Camera.main.pixelHeight * 0.9f)
             {
                 _currentDirection.Scale(new Vector3(1.0f, -1.0f, 1.0f));
             }
@@ -132,7 +132,7 @@ public class Creature : MonoBehaviour
         else if (Random.Range(0.0f, 1.0f) <= chanceToLayEgg)
         {
             _breeding = true;
-            _breedingTimer = _timeBetweenBreeding;
+            _breedingTimer = Random.Range(_timeBetweenBreeding * 0.7f, _timeBetweenBreeding * 1.3f);
             HaveChild(otherCreature);
             return true;
         }
