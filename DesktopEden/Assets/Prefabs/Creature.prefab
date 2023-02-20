@@ -1925,6 +1925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _creaturePrefab: {fileID: 3187784526083506171}
   _spritesParent: {fileID: 7344202409250865763}
+  beingHeld: 0
   _hats: []
   _mouths:
   - {fileID: 6895446709906843312}
@@ -4115,7 +4116,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7344202409250865763}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -2.52, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4878,7 +4879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1857312809241663716, guid: 9fafc6fd56f930a4bb95eafc6c3869a7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 1857312809241663716, guid: 9fafc6fd56f930a4bb95eafc6c3869a7, type: 3}
       propertyPath: m_LocalPosition.z

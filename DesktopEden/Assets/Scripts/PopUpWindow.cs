@@ -30,20 +30,20 @@ public class PopUpWindow : MonoBehaviour
         }
         else
         {
-            onLeftButton.AddListener(leftAction);
+            leftButtonText.text = _leftButtonText;
+            if (leftAction != null) onLeftButton.AddListener(leftAction);
         }
         if (hideRightButton)
         {
             rightButton.gameObject.SetActive(false);
-            leftButtonText.text = _leftButtonText;
         }
         else
         {
-            onRightButton.AddListener(rightAction);
+            if (rightAction != null) onRightButton.AddListener(rightAction);
             rightButtonText.text = _rightButtonText;
         }
 
-        onXButton.AddListener(xAction);
+        if (xAction != null) onXButton.AddListener(xAction);
 
         messageText.text = _messageText;
   
@@ -52,18 +52,20 @@ public class PopUpWindow : MonoBehaviour
 
     public void OnXButton()
     {
-        onXButton.Invoke();
+        onXButton?.Invoke();
         ClosePopUp();
     }
 
     public void OnRightButton()
     {
-        onRightButton.Invoke();
+        onRightButton?.Invoke();
+        ClosePopUp();
     }
 
     public void OnLeftButton()
     {
-        onLeftButton.Invoke();
+        onLeftButton?.Invoke();
+        ClosePopUp();
     }
 
     public void ClosePopUp()

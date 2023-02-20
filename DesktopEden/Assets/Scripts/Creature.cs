@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 
 public class Creature : MonoBehaviour
@@ -13,7 +14,8 @@ public class Creature : MonoBehaviour
 
     private Vector3 _currentDirection = Vector2.zero;
     private float _decisionTimer = 0.0f;
-    private bool _beingHeld = false;
+    public bool beingHeld = false;
+    public bool grabbable = true;
 
     private float _timeBetweenBreeding = 60.0f;
     private float _breedingTimer = 60.0f;
@@ -66,7 +68,7 @@ public class Creature : MonoBehaviour
 
     private void Update()
     {   
-        if (!_beingHeld)
+        if (!beingHeld)
         {
             // Move in current direction
             _transform.position += _currentDirection * Time.deltaTime * speed;
@@ -123,7 +125,7 @@ public class Creature : MonoBehaviour
     // Called by OnTriggerEnter in CeatureBreedingCollider.cs when two creatures colliders overlap
     public bool BreedingTrigger(Creature otherCreature)
     {
-        if (_beingHeld || _breeding || _breedingTimer > 0.0f)
+        if (beingHeld || _breeding || _breedingTimer > 0.0f)
         {
             return false;
         }
@@ -151,7 +153,7 @@ public class Creature : MonoBehaviour
 
     public void PickUp()
     {
-        _beingHeld = true;
+        beingHeld = true;
         _blinkDelay *= 0.25f;
         if (_blinkTimer > 1.0f)
         {
@@ -161,7 +163,7 @@ public class Creature : MonoBehaviour
 
     public void PutDown()
     {
-        _beingHeld = false;
+        beingHeld = false;
         _blinkDelay *= 4.0f;
         _transform.rotation = Quaternion.identity;
     }
@@ -206,11 +208,19 @@ public class Creature : MonoBehaviour
     public void HideCreature()
     {
         _spritesParent.SetActive(false);
+        grabbable = false;
     }
 
     public void UnhideCreature()
     {
         _spritesParent.SetActive(true);
+        grabbable = true;
+    }
+
+    public void FallInHole(Hole hole)
+    {
+        StopAllCoroutines();
+        StartCoroutine(FallCo(hole));
     }
 
     private void SetBodyPart(List<GameObject> parts, int index)
@@ -226,6 +236,18 @@ public class Creature : MonoBehaviour
             part.SetActive(false);
         }
         parts[index].SetActive(true);
+    }
+
+    private void MakeMaskable()
+    {
+        // yikes
+        //_hats[hatIndex].GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        _mouths[mouthIndex].GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        _eyes[eyesIndex].GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        _blinkingEyes[eyesIndex].GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        _heads[headIndex].GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        _legs[legsIndex].GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        _bodies[bodyIndex].GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
     }
 
     private IEnumerator BlinkCo()
@@ -247,5 +269,40 @@ public class Creature : MonoBehaviour
             _eyes[eyesIndex].SetActive(true);
             _blinkingEyes[eyesIndex].SetActive(false);
         }
+    }
+
+    private IEnumerator FallCo(Hole hole)
+    {
+        Vector3 cachedPos = _transform.position;
+        
+        MakeMaskable();
+        grabbable = false;
+        // prevents wandering;
+        _currentDirection = Vector3.zero;
+        _decisionTimer = 10000.0f;
+
+        float timer = 1.5f;
+
+        // do a little wiggle
+        while (timer > 0.0f)
+        {
+            float rZ = Mathf.SmoothStep(-12.0f - (timer * 7), 12.0f + (timer * 7), Mathf.PingPong(Time.time * 4.0f, 1));
+            transform.rotation = Quaternion.Euler(0.0f, 0.0f, rZ);
+            yield return null;
+            timer -= Time.deltaTime;
+        }
+
+        timer = 1.0f;
+        while (timer > 0.0f)
+        {
+            _transform.position = new Vector3(_transform.position.x, _transform.position.y - (Time.deltaTime * 5.0f), _transform.position.z);
+            yield return null;
+            timer -= Time.deltaTime;
+        }
+
+        Destroy(hole.gameObject);
+        GameManager.S.SpawnHole();
+        GameManager.S.MournPopUp(cachedPos, creatureName);
+        Destroy(gameObject);
     }
 }
