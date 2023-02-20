@@ -9,7 +9,7 @@ public class CreatureBreedingCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (creature.BreedingTrigger(collision.gameObject.GetComponent<Creature>()))
+        if (creature.BreedingTrigger(collision.gameObject.GetComponent<CreatureBreedingCollider>().creature))
         {
             ps.transform.position = collision.transform.position;
             ps.Play();

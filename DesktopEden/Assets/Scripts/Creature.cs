@@ -64,11 +64,13 @@ public class Creature : MonoBehaviour
 
         _breedingTimer = Random.Range(0.0f, _timeBetweenBreeding);
         _breeding = false;
+        grabbable = true;
+        beingHeld = false;
     }
 
     private void Update()
     {   
-        if (!beingHeld)
+        if (!beingHeld && !_breeding)
         {
             // Move in current direction
             _transform.position += _currentDirection * Time.deltaTime * speed;
@@ -131,24 +133,10 @@ public class Creature : MonoBehaviour
         }
         else if (Random.Range(0.0f, 1.0f) <= chanceToLayEgg)
         {
-            _breeding = true;
-            _breedingTimer = Random.Range(_timeBetweenBreeding * 0.7f, _timeBetweenBreeding * 1.3f);
-            HaveChild(otherCreature);
+            StartCoroutine(BreedCo(otherCreature));
             return true;
         }
         return false;
-    }
-
-    public Creature HaveChild(Creature otherParent)
-    {
-        // TODO: add in coroutine pause here
-        Creature child = Instantiate(_creaturePrefab).GetComponent<Creature>();
-        child.InitializeRandom();
-        child.transform.position = _transform.position - new Vector3(0.0f, -1.0f, 0.0f);
-
-        _breeding = false;
-
-        return child;
     }
 
     public void PickUp()
@@ -185,7 +173,7 @@ public class Creature : MonoBehaviour
                    Random.Range(0, _eyes.Count), Random.Range(0, _heads.Count),
                    Random.Range(0, _legs.Count), Random.Range(0, _bodies.Count));
 
-        creatureName = "Get Randomized Name pls";
+        creatureName = NameGenerator.S.GetName();
     }
 
     public void SetSprites(int _hatIndex, int _mouthIndex, int _eyesIndex, int _headIndex, int _legsIndex, int _bodyIndex)
@@ -248,6 +236,79 @@ public class Creature : MonoBehaviour
         _heads[headIndex].GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
         _legs[legsIndex].GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
         _bodies[bodyIndex].GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+    }
+
+    private int CoinFlip(int i, int j)
+    {
+        if (Random.Range(0, 2) == 0)
+        {
+            return i;
+        }
+        return j;
+    }
+
+    private float FloatCoinFlip(float i, float j)
+    {
+        if (Random.Range(0, 2) == 0)
+        {
+            return i;
+        }
+        return j;
+    }
+
+    // called on child
+    public void SetChildTraits(Creature parent1, Creature parent2)
+    { 
+        if (parent1 == null)
+        {
+            Debug.Log("Missing parent 1, maybe they died before breeding finished");
+            InitializeRandom();
+            return;
+        }
+        else if (parent2 == null)
+        {
+            Debug.Log("Missing parent 2, maybe they died before breeding finished");
+            InitializeRandom();
+            return;
+        }
+        
+        //hatIndex = CoinFlip(parent1.hatIndex, parent2.hatIndex);
+        mouthIndex = CoinFlip(parent1.mouthIndex, parent2.mouthIndex);
+        eyesIndex = CoinFlip(parent1.eyesIndex, parent2.eyesIndex);
+        headIndex = CoinFlip(parent1.headIndex, parent2.headIndex);
+        legsIndex = CoinFlip(parent1.legsIndex, parent2.legsIndex);
+        bodyIndex = CoinFlip(parent1.bodyIndex, parent2.bodyIndex);
+        SetSprites(hatIndex, mouthIndex, eyesIndex, headIndex, legsIndex, bodyIndex);
+
+        scale = FloatCoinFlip(Random.Range(parent1.scale - 0.15f, parent1.scale + 0.15f), Random.Range(parent2.scale - 0.15f, parent2.scale + 0.15f));
+        _transform.localScale = new Vector3(scale, scale, scale);
+
+        speed = FloatCoinFlip(Random.Range(parent1.speed - 1.0f, parent1.speed + 1.0f), Random.Range(parent2.speed - 1.0f, parent2.speed + 1.0f)); ;
+        
+        directionDecisionTime = Random.Range(directionDecisionTime - 0.75f, directionDecisionTime + 0.75f);
+        chanceToStandStill = Random.Range(chanceToStandStill - 0.1f, chanceToStandStill + 0.1f);
+
+        creatureName = NameGenerator.S.GetName();
+    }
+
+    private IEnumerator BreedCo(Creature otherParent)
+    {
+        _breeding = true;
+        grabbable = false;
+        beingHeld = false;
+
+        yield return new WaitForSeconds(1.0f);
+
+        Creature child = Instantiate(_creaturePrefab).GetComponent<Creature>();
+        child.transform.position = _transform.position - new Vector3(0.0f, 2.0f, 0.0f);
+        child.SetChildTraits(this, otherParent);
+
+        GameManager.S.BirthPopUp(child.transform.position, child.creatureName);
+        _breedingTimer = Random.Range(_timeBetweenBreeding * 0.7f, _timeBetweenBreeding * 1.3f);
+        grabbable = true;
+        _breeding = false;
+
+        _transform.rotation = Quaternion.identity; // bandaid for a bug with grabbing and breeding
     }
 
     private IEnumerator BlinkCo()

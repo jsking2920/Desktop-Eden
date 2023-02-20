@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 608855690}
   - component: {fileID: 608855691}
   - component: {fileID: 608855689}
+  - component: {fileID: 608855692}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -186,6 +187,18 @@ MonoBehaviour:
   _popUpPrefab: {fileID: 6855827800045963141, guid: 87fce79c4fe52b54993ea50d0ea636b7, type: 3}
   _gravePrefab: {fileID: 564196871552538647, guid: 723ec70df6b13494ab5850256078b1a1, type: 3}
   numHoles: 2
+--- !u!114 &608855692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608855688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d709ee2166a7a4bb57b60d298d051b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &670325263
 GameObject:
   m_ObjectHideFlags: 0
