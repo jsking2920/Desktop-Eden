@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
 
     public int numHoles = 2;
 
+    private float _immigrationTimer = 0.0f;
+    private float _immigrationDelay = 120.0f;
+
     private void Awake()
     {
         if (S != null)
@@ -32,15 +35,15 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < 6; i++)
-        {
-            SpawnCreature();
-        }
+        SpawnCreature();
+        SpawnCreature();
 
         for (int j = 0; j < numHoles; j++)
         {
             SpawnHole();
         }
+
+        _immigrationTimer = _immigrationDelay;
     }
 
     private void Update()
@@ -69,6 +72,16 @@ public class GameManager : MonoBehaviour
             _heldCreature.PutDown();
             _heldCreatureTransform = null;
             _heldCreature = null;
+        }
+
+        if (_immigrationTimer <= 0.0f)
+        {
+            SpawnCreature();
+            _immigrationTimer = _immigrationDelay;
+        }
+        else
+        {
+            _immigrationTimer -= Time.deltaTime;
         }
     }
 

@@ -240,7 +240,7 @@ public class Creature : MonoBehaviour
 
     private int CoinFlip(int i, int j)
     {
-        if (Random.Range(0, 2) == 0)
+        if (Random.value < 0.5f)
         {
             return i;
         }
@@ -249,7 +249,7 @@ public class Creature : MonoBehaviour
 
     private float FloatCoinFlip(float i, float j)
     {
-        if (Random.Range(0, 2) == 0)
+        if (Random.value < 0.5f)
         {
             return i;
         }

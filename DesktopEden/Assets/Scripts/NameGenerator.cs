@@ -10,6 +10,8 @@ public class NameGenerator : MonoBehaviour
     private List<string> _namesList;
     private int _namesCount;
 
+    private static int _namesGenerated = 0;
+
     private void Awake()
     {
         if (S != null) return;
@@ -25,10 +27,20 @@ public class NameGenerator : MonoBehaviour
     public string GetName()
     {
         if (_namesCount == 0) return "NULL";
+        else if (_namesGenerated == 0)
+        {
+            _namesGenerated += 1;
+            return "Adam";
+        }
+        else if (_namesGenerated == 1)
+        {
+            _namesGenerated += 1;
+            return "Eve";
+        }
 
         int i = Random.Range(0, _namesList.Count);
         string name = _namesList[i];
-        name.Replace("\r", "");
+        name = name.Replace("\r", "");
         _namesList.RemoveAt(i);
         _namesCount -= 1;
 
