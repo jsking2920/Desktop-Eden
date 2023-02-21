@@ -1996,6 +1996,7 @@ MonoBehaviour:
   speed: 1
   directionDecisionTime: 2
   chanceToStandStill: 0.25
+  _eggObject: {fileID: 7728442142366403472}
 --- !u!95 &2665740677585161227
 Animator:
   serializedVersion: 5
@@ -4953,5 +4954,10 @@ PrefabInstance:
 --- !u!4 &5039513148971851145 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1857312809241663716, guid: 9fafc6fd56f930a4bb95eafc6c3869a7, type: 3}
+  m_PrefabInstance: {fileID: 6640965204211484013}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7728442142366403472 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3992867149884018429, guid: 9fafc6fd56f930a4bb95eafc6c3869a7, type: 3}
   m_PrefabInstance: {fileID: 6640965204211484013}
   m_PrefabAsset: {fileID: 0}

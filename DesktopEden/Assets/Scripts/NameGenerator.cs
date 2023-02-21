@@ -25,9 +25,8 @@ public class NameGenerator : MonoBehaviour
     }
 
     public string GetName()
-    {
-        if (_namesCount == 0) return "NULL";
-        else if (_namesGenerated == 0)
+    {   
+        if (_namesGenerated == 0)
         {
             _namesGenerated += 1;
             return "Adam";

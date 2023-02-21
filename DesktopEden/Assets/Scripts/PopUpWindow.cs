@@ -22,6 +22,18 @@ public class PopUpWindow : MonoBehaviour
     private UnityEvent onRightButton = new UnityEvent();
     private UnityEvent onLeftButton = new UnityEvent();
 
+    private float lifespan = 9.0f;
+
+    private void Update()
+    {
+        lifespan -= Time.deltaTime;
+
+        if (lifespan <= 0.0f)
+        {
+            ClosePopUp();
+        }
+    }
+
     public void Initialize(UnityAction xAction, UnityAction leftAction, UnityAction rightAction, Vector3 worldSpacePos, string _messageText, string _leftButtonText, string _rightButtonText, bool hideLeftButton, bool hideRightButton)
     {
         if (hideLeftButton)

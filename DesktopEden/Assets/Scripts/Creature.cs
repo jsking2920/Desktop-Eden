@@ -53,6 +53,9 @@ public class Creature : MonoBehaviour
     private float _blinkDelay = 4.0f;
     private float _blinkTimer = 4.0f;
 
+    // Trying to fix egg bug
+    [SerializeField] private GameObject _eggObject;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -66,6 +69,8 @@ public class Creature : MonoBehaviour
         _breeding = false;
         grabbable = true;
         beingHeld = false;
+
+        _eggObject.SetActive(true);
     }
 
     private void Update()

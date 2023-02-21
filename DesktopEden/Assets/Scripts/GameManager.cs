@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public int numHoles = 2;
 
     private float _immigrationTimer = 0.0f;
-    private float _immigrationDelay = 120.0f;
+    private float _immigrationDelay = 80.0f;
 
     private void Awake()
     {
