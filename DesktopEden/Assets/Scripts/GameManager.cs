@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
     public void MournPopUp(Vector3 pos, string name)
     {
         PopUpWindow popup = Instantiate(_popUpPrefab, mainCanvas.transform).GetComponent<PopUpWindow>();
-        popup.Initialize(null, () => SpawnGrave(pos, name), null, pos, "Would you like to mourn the death of " + name + "?", "Yes", "No", false, false);
+        popup.Initialize(null, () => { SpawnGrave(pos, name); }, null, pos, "Would you like to mourn the death of " + name + "?", "Yes", "No", false, false);
     }
 
     public void BirthPopUp(Vector3 pos, string name)

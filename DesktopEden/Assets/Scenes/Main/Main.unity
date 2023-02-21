@@ -184,7 +184,7 @@ MonoBehaviour:
   mainCanvas: {fileID: 702420241}
   _creaturePrefab: {fileID: 3187784526083506171, guid: d98ddfecb6afa5244b4933aa6ee5ce0e, type: 3}
   _holePrefab: {fileID: 8378389269481609025, guid: 058124f0d6f080d4f9a419180c4816d9, type: 3}
-  _popUpPrefab: {fileID: 6855827800045963141, guid: 87fce79c4fe52b54993ea50d0ea636b7, type: 3}
+  _popUpPrefab: {fileID: 5610667986677913424, guid: 87fce79c4fe52b54993ea50d0ea636b7, type: 3}
   _gravePrefab: {fileID: 564196871552538647, guid: 723ec70df6b13494ab5850256078b1a1, type: 3}
   numHoles: 2
 --- !u!114 &608855692
