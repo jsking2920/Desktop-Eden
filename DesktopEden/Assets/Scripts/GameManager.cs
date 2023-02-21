@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public int numHoles = 2;
 
     private float _immigrationTimer = 0.0f;
-    private float _immigrationDelay = 80.0f;
+    private float _immigrationDelay = 40.0f;
 
     private void Awake()
     {
@@ -82,6 +82,11 @@ public class GameManager : MonoBehaviour
         else
         {
             _immigrationTimer -= Time.deltaTime;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 
