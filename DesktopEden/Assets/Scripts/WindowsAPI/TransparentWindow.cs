@@ -4,6 +4,7 @@ using UnityEngine;
 
 using System;
 using System.Runtime.InteropServices;
+using UnityEngine.EventSystems;
 
 // Video on transparent windows: https://www.youtube.com/watch?v=RqgsGaMPZTw
 // Other functions available in user32.dll: https://www.pinvoke.net/
@@ -73,7 +74,8 @@ public class TransparentWindow : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
-        SetClickthrough(hit.rigidbody == null);
+        bool nothingUnderMouse = hit.rigidbody == null && !EventSystem.current.IsPointerOverGameObject();
+        SetClickthrough(nothingUnderMouse);
     }
 
     private void SetClickthrough(bool clickthrough)
